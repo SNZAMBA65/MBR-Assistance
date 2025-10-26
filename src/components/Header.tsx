@@ -1,21 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import logo from './logo.png';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
+  // ✅ Surbrillance automatique du lien actif au scroll
+  useEffect(() => {
+    const sections = document.querySelectorAll('section[id]');
+    const handleScroll = () => {
+      let current = '';
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 150;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id') || '';
+        }
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // ✅ Remonte en haut au clic sur le logo
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setMenuOpen(false);
   };
 
+  // ✅ Défilement fluide vers une section
   const handleLinkClick = (id: string) => {
     setMenuOpen(false);
     const section = document.querySelector(id);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (section) section.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -49,23 +67,46 @@ export default function Header() {
           {/* === Menu Desktop === */}
           <nav className="hidden md:flex items-center gap-8">
             <a
+              href="#hero"
+              onClick={() => handleLinkClick('#hero')}
+              className={`font-medium transition-colors ${
+                activeSection === 'hero'
+                  ? 'text-emerald-100 underline'
+                  : 'hover:text-emerald-100'
+              }`}
+            >
+              Accueil
+            </a>
+            <a
               href="#services"
               onClick={() => handleLinkClick('#services')}
-              className="hover:text-emerald-100 transition-colors font-medium"
+              className={`font-medium transition-colors ${
+                activeSection === 'services'
+                  ? 'text-emerald-100 underline'
+                  : 'hover:text-emerald-100'
+              }`}
             >
               Services
             </a>
             <a
               href="#pricing"
               onClick={() => handleLinkClick('#pricing')}
-              className="hover:text-emerald-100 transition-colors font-medium"
+              className={`font-medium transition-colors ${
+                activeSection === 'pricing'
+                  ? 'text-emerald-100 underline'
+                  : 'hover:text-emerald-100'
+              }`}
             >
               Tarifs
             </a>
             <a
               href="#contact"
               onClick={() => handleLinkClick('#contact')}
-              className="hover:text-emerald-100 transition-colors font-medium"
+              className={`font-medium transition-colors ${
+                activeSection === 'contact'
+                  ? 'text-emerald-100 underline'
+                  : 'hover:text-emerald-100'
+              }`}
             >
               Contact
             </a>
@@ -83,25 +124,48 @@ export default function Header() {
 
         {/* === Menu Mobile déroulant === */}
         {menuOpen && (
-          <div className="md:hidden flex flex-col bg-emerald-700 rounded-b-2xl shadow-lg">
+          <div className="md:hidden flex flex-col bg-emerald-700 rounded-b-2xl shadow-lg animate-slideDown">
+            <a
+              href="#hero"
+              onClick={() => handleLinkClick('#hero')}
+              className={`px-6 py-3 border-t border-emerald-600 transition-colors ${
+                activeSection === 'hero'
+                  ? 'bg-emerald-600'
+                  : 'hover:bg-emerald-600'
+              }`}
+            >
+              Accueil
+            </a>
             <a
               href="#services"
               onClick={() => handleLinkClick('#services')}
-              className="px-6 py-3 border-t border-emerald-600 hover:bg-emerald-600 transition-colors"
+              className={`px-6 py-3 border-t border-emerald-600 transition-colors ${
+                activeSection === 'services'
+                  ? 'bg-emerald-600'
+                  : 'hover:bg-emerald-600'
+              }`}
             >
               Services
             </a>
             <a
               href="#pricing"
               onClick={() => handleLinkClick('#pricing')}
-              className="px-6 py-3 border-t border-emerald-600 hover:bg-emerald-600 transition-colors"
+              className={`px-6 py-3 border-t border-emerald-600 transition-colors ${
+                activeSection === 'pricing'
+                  ? 'bg-emerald-600'
+                  : 'hover:bg-emerald-600'
+              }`}
             >
               Tarifs
             </a>
             <a
               href="#contact"
               onClick={() => handleLinkClick('#contact')}
-              className="px-6 py-3 border-t border-emerald-600 hover:bg-emerald-600 transition-colors"
+              className={`px-6 py-3 border-t border-emerald-600 transition-colors ${
+                activeSection === 'contact'
+                  ? 'bg-emerald-600'
+                  : 'hover:bg-emerald-600'
+              }`}
             >
               Contact
             </a>
