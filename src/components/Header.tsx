@@ -1,4 +1,3 @@
-import { Phone, Mail } from 'lucide-react';
 import logo from './logo.png'; // ton logo dans le même dossier
 
 export default function Header() {
@@ -13,36 +12,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-emerald-700 to-emerald-600 text-white shadow-lg">
       <div className="container mx-auto px-4">
-        {/* Ligne du haut avec les contacts */}
-        <div className="flex items-center justify-between py-3 border-b border-emerald-500">
-          <div className="flex items-center gap-6 text-sm">
-            <a
-              href="tel:0622801030"
-              className="flex items-center gap-2 hover:text-emerald-100 transition-colors"
-            >
-              <Phone size={16} />
-              <span>062 28 01 03</span>
-            </a>
-
-            <a
-              href="tel:0773633350"
-              className="flex items-center gap-2 hover:text-emerald-100 transition-colors"
-            >
-              <Phone size={16} />
-              <span>077 36 33 50</span>
-            </a>
-
-            <a
-              href="mailto:assistancegabon@gmail.com"
-              className="flex items-center gap-2 hover:text-emerald-100 transition-colors"
-            >
-              <Mail size={16} />
-              <span>assistancegabon@gmail.com</span>
-            </a>
-          </div>
-        </div>
-
-        {/* Ligne du bas avec le logo et la navigation */}
+        {/* Ligne unique : logo + navigation */}
         <div className="py-4 flex items-center justify-between">
           {/* ✅ Logo cliquable */}
           <div
