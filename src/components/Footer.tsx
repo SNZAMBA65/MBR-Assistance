@@ -78,6 +78,9 @@ export default function Footer() {
             <p className="mt-2">
               Société Gabonaise d'Assistance Administrative & Aéroportuaire
             </p>
+             <p className="mt-2">
+             Site web développé par Samir NZAMBA, email:samirnzamba069@gmail.com
+            </p>
           </div>
         </div>
       </div>
